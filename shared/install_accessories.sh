@@ -1,5 +1,7 @@
 #!/bin/bash
 
+kubectl apply -f ./namespaces_and_serviceaccount.yaml
+
 # Dashboard install
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/aio/deploy/recommended/kubernetes-dashboard.yaml
 

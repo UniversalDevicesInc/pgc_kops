@@ -28,9 +28,10 @@ sudo mv kops-linux-amd64 /usr/local/bin/kops
 echo "Setting environment variables....."
 echo "export NAME=$NAME" >> ~/.bashrc
 echo "export KOPS_STATE_STORE=$KOPS_STATE_STORE" >> ~/.bashrc
+source ~/.bashrc
 export NAME=$NAME
 export KOPS_STATE_STORE=$KOPS_STATE_STORE
-source ~/.bashrc
+
 
 # kops configure system
 kops create cluster --master-count 1 --node-count 2 --zones us-east-1a,us-east-1b \
