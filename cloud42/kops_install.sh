@@ -16,10 +16,6 @@ echo "Installing kubectl....."
 curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
 chmod +x ./kubectl
 sudo mv ./kubectl /usr/local/bin/kubectl
-source <(kubectl completion bash)
-echo "source <(kubectl completion bash)" >> ~/.bashrc
-source <(kops completion bash)
-echo "source <(kops completion bash)" >> ~/.bashrc
 
 
 # kops install
@@ -32,14 +28,16 @@ sudo mv kops-linux-amd64 /usr/local/bin/kops
 echo "Setting environment variables....."
 echo "export NAME=$NAME" >> ~/.bashrc
 echo "export KOPS_STATE_STORE=$KOPS_STATE_STORE" >> ~/.bashrc
+export NAME=$NAME
+export KOPS_STATE_STORE=$KOPS_STATE_STORE
 source ~/.bashrc
 
 # kops configure system
 kops create cluster --master-count 1 --node-count 2 --zones us-east-1a,us-east-1b \
   --master-zones us-east-1a \
   -t private --networking weave \
-  --node-size t2.micro \
-  --master-size t2.micro $NAME
+  --node-size t2.large \
+  --master-size t2.medium $NAME
 
 # modify cluster config if needed
 # kops edit ig $NAME
@@ -52,3 +50,8 @@ kops create cluster --master-count 1 --node-count 2 --zones us-east-1a,us-east-1
 
 # deploy cluster on AWS
 kops update cluster $NAME --yes
+
+source <(kubectl completion bash)
+echo "source <(kubectl completion bash)" >> ~/.bashrc
+source <(kops completion bash)
+echo "source <(kops completion bash)" >> ~/.bashrc
