@@ -18,6 +18,9 @@ chmod +x ./kubectl
 sudo mv ./kubectl /usr/local/bin/kubectl
 source <(kubectl completion bash)
 echo "source <(kubectl completion bash)" >> ~/.bashrc
+source <(kops completion bash)
+echo "source <(kops completion bash)" >> ~/.bashrc
+
 
 # kops install
 echo "Installing kops....."
@@ -27,10 +30,9 @@ sudo mv kops-linux-amd64 /usr/local/bin/kops
 
 # Add environment to .bashrc
 echo "Setting environment variables....."
-export NAME=$NAME
-export KOPS_STATE_STORE=$KOPS_STATE_STORE
 echo "export NAME=$NAME" >> ~/.bashrc
 echo "export KOPS_STATE_STORE=$KOPS_STATE_STORE" >> ~/.bashrc
+source ~/.bashrc
 
 # kops configure system
 kops create cluster --master-count 1 --node-count 2 --zones us-east-1a,us-east-1b \
