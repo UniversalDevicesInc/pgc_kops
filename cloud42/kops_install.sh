@@ -35,10 +35,10 @@ export KOPS_STATE_STORE=$KOPS_STATE_STORE
 
 # kops configure system
 kops create cluster --master-count 1 --node-count 2 --zones us-east-1a,us-east-1b \
-  --master-zones us-east-1a \
-  -t private --networking weave \
-  --node-size t2.large \
-  --master-size t2.medium $NAME
+  --master-zones us-east-1a
+#  -t private --networking weave \
+# --node-size t2.large \
+# --master-size t2.medium $NAME
 
 # modify cluster config if needed
 # kops edit ig $NAME
