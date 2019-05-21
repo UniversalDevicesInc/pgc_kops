@@ -8,11 +8,6 @@
 # IAMFullAccess
 # AmazonVPCFullAccess
 
-sudo yum update -y
-sudo yum upgrade -y
-sudo yum install git -y
-
-
 NAME=kube.aws.cloud42.dev
 KOPS_STATE_STORE=s3://aws-cloud42-dev-state-store
 
