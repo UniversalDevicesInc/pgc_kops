@@ -15,4 +15,4 @@ helm init --service-account tiller --history-max 200
 helm repo add incubator http://storage.googleapis.com/kubernetes-charts-incubator
 helm repo update
 helm install --name fluentd incubator/fluentd-cloudwatch \
-  --set awsRegion=us-east-1,rbac.create=true
+  -f ./fluentd.yaml
