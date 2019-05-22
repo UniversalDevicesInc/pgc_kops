@@ -33,7 +33,7 @@ spec:
             memory: 4Gi
           requests:
             cpu: 500m
-            memory: 4Gi
+            memory: 2Gi
 ---
 apiVersion: v1
 kind: Service
