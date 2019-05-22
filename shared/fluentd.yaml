@@ -198,9 +198,9 @@ fluentdConfig : |-
     </record>
   </filter>
 
-  #<filter kubernetes.**>
-  #  @type kubernetes_metadata
-  #</filter>
+  <filter kubernetes.**>
+    @type kubernetes_metadata
+  </filter>
 
   <filter kubernetes.**>
     @type record_transformer
