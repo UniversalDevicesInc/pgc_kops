@@ -14,5 +14,11 @@ chmod 700 get_helm.sh
 helm init --service-account tiller --history-max 200
 helm repo add incubator http://storage.googleapis.com/kubernetes-charts-incubator
 helm repo update
+aws logs create-log-group --log-group-name kubernetes.pgc-system \
+  --region us-east-1 --retention-in-days 30
+aws logs create-log-group --log-group-name kubernetes.nodeservers \
+  --region us-east-1 --retention-in-days 30
+aws logs create-log-group --log-group-name kubernetes.system \
+  --region us-east-1 --retention-in-days 30
 helm install --name fluentd incubator/fluentd-cloudwatch \
   -f ./fluentd.yaml --namespace logging

@@ -146,7 +146,7 @@ fluentdConfig : |-
   @type record_transformer
   enable_ruby true
   <record>
-  service ${ENV["ENV"]}-${record["kubernetes"]["container_name"]}
+  service ${record["kubernetes"]["container_name"]}
   pod ${record["kubernetes"]["pod_name"]}
   </record>
   </filter>
@@ -161,6 +161,11 @@ fluentdConfig : |-
   @type json
   </parse>
   </filter>
+
+  <match **logging**>
+    @type null
+  </match>
+
 
   <match **pgc-system**>
     @type cloudwatch_logs
