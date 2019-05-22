@@ -198,9 +198,9 @@ fluentdConfig : |-
     </record>
   </filter>
 
-  <filter kubernetes.**>
-    @type kubernetes_metadata
-  </filter>
+  #<filter kubernetes.**>
+  #  @type kubernetes_metadata
+  #</filter>
 
   <filter kubernetes.**>
     @type record_transformer
@@ -218,9 +218,6 @@ fluentdConfig : |-
     reserve_data true
     remove_key_name_field true
     emit_invalid_record_to_error false
-    <parse>
-      @type json
-    </parse>
   </filter>
 
   <match **pgc-system**>
@@ -231,7 +228,6 @@ fluentdConfig : |-
     remove_log_stream_name_key true
     auto_create_stream true
     json_handler yajl # To avoid UndefinedConversionError
-    log_rejected_request "#{ENV['LOG_REJECTED_REQUEST']}" # Log rejected request for missing parts
   </match>
 
   <match **nodeservers**>
@@ -242,7 +238,6 @@ fluentdConfig : |-
     remove_log_stream_name_key true
     auto_create_stream true
     json_handler yajl # To avoid UndefinedConversionError
-    log_rejected_request "#{ENV['LOG_REJECTED_REQUEST']}" # Log rejected request for missing parts
   </match>
 
   <match **>
@@ -253,5 +248,4 @@ fluentdConfig : |-
     remove_log_stream_name_key true
     auto_create_stream true
     json_handler yajl # To avoid UndefinedConversionError
-    log_rejected_request "#{ENV['LOG_REJECTED_REQUEST']}" # Log rejected request for missing parts
   </match>
