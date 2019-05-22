@@ -5,7 +5,7 @@ rbac:
 
 fluentdConfig : |-
   <match fluent.**>
-    type null
+    @type null
   </match>
 
   <source>
@@ -163,31 +163,28 @@ fluentdConfig : |-
   </filter>
 
   <match **pgc-system**>
-    type cloudwatch_logs
+    @type cloudwatch_logs
     log_group_name "kubernetes.pgc-system"
     log_stream_name_key service
     remove_log_group_name_key true
     remove_log_stream_name_key true
     auto_create_stream true
-    use_tag_as_stream true
   </match>
 
   <match **nodeservers**>
-    type cloudwatch_logs
+    @type cloudwatch_logs
     log_group_name "kubernetes.nodeservers"
     log_stream_name_key service
     remove_log_group_name_key true
     remove_log_stream_name_key true
     auto_create_stream true
-    use_tag_as_stream true
   </match>
 
   <match **>
-    type cloudwatch_logs
+    @type cloudwatch_logs
     log_group_name "kubernetes.system"
     log_stream_name_key service
     remove_log_group_name_key true
     remove_log_stream_name_key true
     auto_create_stream true
-    use_tag_as_stream true
   </match>
