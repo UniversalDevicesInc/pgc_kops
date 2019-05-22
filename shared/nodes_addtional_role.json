@@ -1,0 +1,13 @@
+{
+  "Sid": "logs",
+  "Effect": "Allow",
+  "Action": [
+      "logs:CreateLogStream",
+      "logs:PutLogEvents",
+      "logs:DescribeLogGroups",
+      "logs:DescribeLogStreams"
+  ],
+  "Resource": [
+      "arn:aws:logs:*:*:*"
+  ]
+}
