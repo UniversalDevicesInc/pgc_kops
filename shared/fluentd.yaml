@@ -29,6 +29,9 @@ fluentdConfig : |-
     path /var/log/salt/minion
     pos_file /var/log/fluentd-salt.pos
     tag salt
+    <parse>
+    @type json
+    </parse>
   </source>
 
   <source>
@@ -38,6 +41,9 @@ fluentdConfig : |-
     path /var/log/startupscript.log
     pos_file /var/log/fluentd-startupscript.log.pos
     tag startupscript
+    <parse>
+    @type json
+    </parse>
   </source>
 
   <source>
@@ -47,6 +53,9 @@ fluentdConfig : |-
     path /var/log/docker.log
     pos_file /var/log/fluentd-docker.log.pos
     tag docker
+    <parse>
+    @type json
+    </parse>
   </source>
 
   <source>
@@ -66,6 +75,9 @@ fluentdConfig : |-
     path /var/log/kubelet.log
     pos_file /var/log/fluentd-kubelet.log.pos
     tag kubelet
+    <parse>
+    @type json
+    </parse>
   </source>
 
   <source>
@@ -76,6 +88,9 @@ fluentdConfig : |-
     path /var/log/kube-proxy.log
     pos_file /var/log/fluentd-kube-proxy.log.pos
     tag kube-proxy
+    <parse>
+    @type json
+    </parse>
   </source>
 
   <source>
@@ -86,6 +101,9 @@ fluentdConfig : |-
     path /var/log/kube-apiserver.log
     pos_file /var/log/fluentd-kube-apiserver.log.pos
     tag kube-apiserver
+    <parse>
+    @type json
+    </parse>
   </source>
 
   <source>
@@ -96,6 +114,9 @@ fluentdConfig : |-
     path /var/log/kube-controller-manager.log
     pos_file /var/log/fluentd-kube-controller-manager.log.pos
     tag kube-controller-manager
+    <parse>
+    @type json
+    </parse>
   </source>
 
   <source>
@@ -106,6 +127,9 @@ fluentdConfig : |-
     path /var/log/kube-scheduler.log
     pos_file /var/log/fluentd-kube-scheduler.log.pos
     tag kube-scheduler
+    <parse>
+    @type json
+    </parse>
   </source>
 
   <source>
@@ -116,6 +140,9 @@ fluentdConfig : |-
     path /var/log/rescheduler.log
     pos_file /var/log/fluentd-rescheduler.log.pos
     tag rescheduler
+    <parse>
+    @type json
+    </parse>
   </source>
 
   <source>
@@ -126,6 +153,9 @@ fluentdConfig : |-
     path /var/log/glbc.log
     pos_file /var/log/fluentd-glbc.log.pos
     tag glbc
+    <parse>
+    @type json
+    </parse>
   </source>
 
   <source>
@@ -136,6 +166,9 @@ fluentdConfig : |-
     path /var/log/cluster-autoscaler.log
     pos_file /var/log/fluentd-cluster-autoscaler.log.pos
     tag cluster-autoscaler
+    <parse>
+    @type json
+    </parse>
   </source>
 
   <filter kubernetes.**>
@@ -161,11 +194,6 @@ fluentdConfig : |-
   @type json
   </parse>
   </filter>
-
-  <match **logging**>
-    @type null
-  </match>
-
 
   <match **pgc-system**>
     @type cloudwatch_logs
