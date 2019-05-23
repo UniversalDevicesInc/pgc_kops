@@ -24,4 +24,4 @@ aws logs put-retention-policy --log-group-name kubernetes.nodeservers \
 aws logs put-retention-policy --log-group-name kubernetes.system \
   --retention-in-days 30 --region us-east-1
 helm install --name fluentd incubator/fluentd-cloudwatch \
-  -f ./fluentd.yaml --namespace logging
+  -f ./fluentd.yaml --namespace kube-system

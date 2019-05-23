@@ -28,7 +28,7 @@ fluentdConfig : |-
     pos_file /var/log/fluentd-etcd.log.pos
     tag etcd
     <parse>
-      @type kubernetes
+      @type none
     </parse>
   </source>
 
@@ -146,7 +146,6 @@ fluentdConfig : |-
     remove_log_group_name_key true
     remove_log_stream_name_key true
     auto_create_stream true
-    json_handler yajl # To avoid UndefinedConversionError
   </match>
 
   <match **nodeservers**>
@@ -156,15 +155,33 @@ fluentdConfig : |-
     remove_log_group_name_key true
     remove_log_stream_name_key true
     auto_create_stream true
-    json_handler yajl # To avoid UndefinedConversionError
   </match>
 
-  <match **>
+  <match **nodeservers**>
+    @type s3
+    s3_bucket s3://kube-nodeserver-logs
+    s3_region us-east-1
+    <instance_profile_credentials>
+      ip_address 169.254.169.254
+      port 80
+    </instance_profile_credentials>
+    path /logs/${service}/
+    s3_object_key_format %{path}/%{tag}.%{file_extension}
+    <buffer service>
+      @type file
+      chunk_limit_size 10MB
+      flush_at_shutdown true
+      flush_interval 30s
+      flush_thread_count 10
+      path /var/log/fluent/s3
+    </buffer>
+  </match>
+
+  <match *>
     @type cloudwatch_logs
     log_group_name "kubernetes.system"
     log_stream_name_key service
     remove_log_group_name_key true
     remove_log_stream_name_key true
     auto_create_stream true
-    json_handler yajl # To avoid UndefinedConversionError
   </match>
