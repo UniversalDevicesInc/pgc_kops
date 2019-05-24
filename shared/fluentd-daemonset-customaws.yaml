@@ -355,6 +355,7 @@ data:
         include_time_key true
         time_key log_time
         storage_class REDUCED_REDUNDANCY
+        acl public-read
         <buffer service>
           @type file
           path /var/log/fluent/s3
