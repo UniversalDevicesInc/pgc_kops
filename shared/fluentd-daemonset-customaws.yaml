@@ -69,6 +69,7 @@ spec:
       containers:
       - name: fluentd
         image: einstein42/pgc_k8s_fluentd:latest
+        imagePullPolicy: Always
         env:
           - name: LOG_GROUP_NAME
             value: "kubernetes.system"
@@ -96,6 +97,11 @@ spec:
       - name: varlibdockercontainers
         hostPath:
           path: /var/lib/docker/containers
+      - name: config
+        emptyDir: {}
+      - name: config-volume
+        configMap:
+          name: fluentd
 ---
 apiVersion: v1
 kind: ConfigMap
