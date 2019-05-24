@@ -69,7 +69,7 @@ spec:
       containers:
       - name: fluentd
         image: einstein42/pgc_k8s_fluentd:latest
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         env:
           - name: LOG_GROUP_NAME
             value: "kubernetes.system"
