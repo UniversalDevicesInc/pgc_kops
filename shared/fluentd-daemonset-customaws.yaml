@@ -164,32 +164,34 @@ data:
     </match>
 
     <match **nodeservers**>
-      @type cloudwatch_logs
-      log_group_name "kubernetes.nodeservers"
-      log_stream_name_key service
-      remove_log_group_name_key true
-      remove_log_stream_name_key true
-      auto_create_stream true
-    </match>
-
-    <match **nodeservers**>
-      @type s3
-      s3_bucket kube-nodeserver-logs
-      s3_region us-east-1
-      <instance_profile_credentials>
-        ip_address 169.254.169.254
-        port 80
-      </instance_profile_credentials>
-      path /logs/${service}/
-      s3_object_key_format %{path}/%{tag}.%{file_extension}
-      <buffer service>
-        @type file
-        chunk_limit_size 10MB
-        flush_at_shutdown true
-        flush_interval 30s
-        flush_thread_count 10
-        path /var/log/fluent/s3
-      </buffer>
+      @type copy
+      <store>
+        @type cloudwatch_logs
+        log_group_name "kubernetes.nodeservers"
+        log_stream_name_key service
+        remove_log_group_name_key true
+        remove_log_stream_name_key true
+        auto_create_stream true
+      </store>
+      <store>
+        @type s3
+        s3_bucket kube-nodeserver-logs
+        s3_region us-east-1
+        <instance_profile_credentials>
+          ip_address 169.254.169.254
+          port 80
+        </instance_profile_credentials>
+        path /logs/${service}/
+        s3_object_key_format %{path}/%{tag}.%{file_extension}
+        <buffer service>
+          @type file
+          chunk_limit_size 10MB
+          flush_at_shutdown true
+          flush_interval 30s
+          flush_thread_count 10
+          path /var/log/fluent/s3
+        </buffer>
+      </store>
     </match>
 
     <match **>
