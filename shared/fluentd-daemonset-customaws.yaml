@@ -174,7 +174,7 @@ data:
 
     <match **nodeservers**>
       @type s3
-      s3_bucket s3://kube-nodeserver-logs
+      s3_bucket kube-nodeserver-logs
       s3_region us-east-1
       <instance_profile_credentials>
         ip_address 169.254.169.254
