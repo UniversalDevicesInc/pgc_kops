@@ -192,7 +192,7 @@ data:
       </buffer>
     </match>
 
-    <match *>
+    <match **>
       @type cloudwatch_logs
       log_group_name "kubernetes.system"
       log_stream_name_key service
