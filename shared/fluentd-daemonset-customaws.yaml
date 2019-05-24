@@ -344,6 +344,7 @@ data:
         @type s3
         s3_bucket kube-nodeserver-logs
         s3_region us-east-1
+        num_threads 10
         <instance_profile_credentials>
           ip_address 169.254.169.254
           port 80
@@ -351,7 +352,6 @@ data:
         path ${service}
         s3_object_key_format %{path}/logs_%{index}.%{file_extension}
         store_as json
-        format json
         include_time_key true
         time_key log_time
         storage_class REDUCED_REDUNDANCY
@@ -359,7 +359,14 @@ data:
         <buffer service>
           @type file
           path /var/log/fluent/s3
+          flush_at_shutdown true
+          flush_thread_count 10
+          timekey 1d
+          timekey_wait 30s
         </buffer>
+        <format>
+          @type json
+        </format>
       </store>
     </match>
 
