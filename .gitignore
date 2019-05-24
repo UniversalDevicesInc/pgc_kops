@@ -85,3 +85,5 @@ run_local.sh
 create_service.sh
 create_manager-test.sh
 certs/*
+fluentd-kubernetes-daemonset
+fluentd-image
