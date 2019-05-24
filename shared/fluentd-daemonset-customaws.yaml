@@ -361,7 +361,10 @@ data:
           path /var/log/fluent/s3
           flush_thread_count 10
           timekey 1d
+          timekey_use_utc true
           timekey_wait 5m
+          chunk_limit_size 10MB
+          compress gzip
         </buffer>
         <format>
           @type json
