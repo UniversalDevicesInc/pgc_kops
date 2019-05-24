@@ -359,10 +359,9 @@ data:
         <buffer service,time>
           @type file
           path /var/log/fluent/s3
-          flush_at_shutdown true
           flush_thread_count 10
           timekey 1d
-          timekey_wait 1h
+          timekey_wait 5m
         </buffer>
         <format>
           @type json
