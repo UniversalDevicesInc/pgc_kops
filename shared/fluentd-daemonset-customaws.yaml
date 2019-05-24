@@ -356,14 +356,14 @@ data:
         time_key log_time
         storage_class REDUCED_REDUNDANCY
         acl public-read
-        <buffer service>
+        <buffer service,time>
           @type file
           path /var/log/fluent/s3
           flush_at_shutdown true
           flush_thread_count 10
           flush_mode immediate
           timekey 1d
-          timekey_wait 0
+          timekey_wait 1h
         </buffer>
         <format>
           @type json
