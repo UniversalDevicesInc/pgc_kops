@@ -349,15 +349,14 @@ data:
           port 80
         </instance_profile_credentials>
         path ${service}
-        s3_object_key_format %{path}/logs_%{time_slice}.%{file_extension}
+        s3_object_key_format %{path}/logs_%{index}.%{file_extension}
         store_as json
         format json
+        include_time_key true
+        time_key log_time
+        storage_class REDUCED_REDUNDANCY
         <buffer service>
           @type file
-          chunk_limit_size 10MB
-          flush_at_shutdown true
-          flush_interval 30s
-          flush_thread_count 10
           path /var/log/fluent/s3
         </buffer>
       </store>
