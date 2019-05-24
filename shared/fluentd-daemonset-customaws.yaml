@@ -360,6 +360,7 @@ data:
           @type file
           path /var/log/fluent/s3
           flush_thread_count 10
+          flush_mode interval
           timekey 1d
           timekey_use_utc true
           timekey_wait 5m
