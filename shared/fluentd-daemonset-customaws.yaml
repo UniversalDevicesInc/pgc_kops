@@ -181,7 +181,7 @@ data:
           ip_address 169.254.169.254
           port 80
         </instance_profile_credentials>
-        path /logs/${service}/
+        path logs/${service}/
         <buffer service>
           @type file
           chunk_limit_size 10MB
