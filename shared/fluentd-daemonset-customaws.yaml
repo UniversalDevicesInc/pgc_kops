@@ -182,7 +182,6 @@ data:
           port 80
         </instance_profile_credentials>
         path /logs/${service}/
-        s3_object_key_format %{path}/%{tag}.%{file_extension}
         <buffer service>
           @type file
           chunk_limit_size 10MB
