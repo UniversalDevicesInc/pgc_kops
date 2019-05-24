@@ -332,14 +332,14 @@ data:
 
     <match **nodeservers**>
       @type copy
-      # <store>
-      #  @type cloudwatch_logs
-      #  log_group_name "kubernetes.nodeservers"
-      #  log_stream_name_key service
-      #  remove_log_group_name_key true
-      #  remove_log_stream_name_key true
-      #  auto_create_stream true
-      #</store>
+      <store>
+       @type cloudwatch_logs
+       log_group_name "kubernetes.nodeservers"
+       log_stream_name_key service
+       remove_log_group_name_key true
+       remove_log_stream_name_key true
+       auto_create_stream true
+      </store>
       <store>
         @type s3
         s3_bucket kube-nodeserver-logs
