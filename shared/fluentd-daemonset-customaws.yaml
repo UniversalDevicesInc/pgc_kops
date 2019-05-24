@@ -364,7 +364,7 @@ data:
           timekey 1d
           timekey_use_utc true
           timekey_wait 5m
-          #chunk_limit_size 10MB
+          chunk_limit_size 5MB
         </buffer>
         <format>
           @type json
