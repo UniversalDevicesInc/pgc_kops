@@ -332,25 +332,25 @@ data:
 
     <match **nodeservers**>
       @type copy
-      <store>
-        @type cloudwatch_logs
-        log_group_name "kubernetes.nodeservers"
-        log_stream_name_key service
-        remove_log_group_name_key true
-        remove_log_stream_name_key true
-        auto_create_stream true
-      </store>
+      # <store>
+      #  @type cloudwatch_logs
+      #  log_group_name "kubernetes.nodeservers"
+      #  log_stream_name_key service
+      #  remove_log_group_name_key true
+      #  remove_log_stream_name_key true
+      #  auto_create_stream true
+      #</store>
       <store>
         @type s3
         s3_bucket kube-nodeserver-logs
         s3_region us-east-1
-        num_threads 10
         <instance_profile_credentials>
           ip_address 169.254.169.254
           port 80
         </instance_profile_credentials>
         path ${service}
-        s3_object_key_format %{path}/logs_%{index}.%{file_extension}
+        time_slice_format %Y%m%d
+        s3_object_key_format %{path}/logs_%{time_slice}_%{index}.%{file_extension}
         store_as json
         include_time_key true
         time_key log_time
@@ -361,8 +361,9 @@ data:
           path /var/log/fluent/s3
           flush_at_shutdown true
           flush_thread_count 10
+          flush_mode immediate
           timekey 1d
-          timekey_wait 30s
+          timekey_wait 0
         </buffer>
         <format>
           @type json
