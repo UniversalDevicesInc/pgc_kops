@@ -41,7 +41,7 @@ spec:
     rbac: {}
   channel: stable
   cloudProvider: aws
-  configBase: s3://pgc-state-store/pgcdev.aws.cloud42.dev
+  configBase: s3://pgc-c42-state-store/pgcdev.aws.cloud42.dev
   etcdClusters:
   - cpuRequest: 200m
     etcdMembers:
