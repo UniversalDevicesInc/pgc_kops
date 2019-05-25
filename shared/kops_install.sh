@@ -13,7 +13,7 @@ die () {
     exit 1
 }
 
-[ "$#" -ne 3 ] && die "Usage: ./kops_install.sh pgcdev.aws.cloud42.dev ./pgcdev.yaml, $# provided"
+[ "$#" -ne 2 ] && die "Usage: ./kops_install.sh pgcdev.aws.cloud42.dev ./pgcdev.yaml, $# provided"
 NAME=$1
 DNAME=${NAME//./-}
 KOPS_STATE_STORE=s3://${DNAME}-state-store
