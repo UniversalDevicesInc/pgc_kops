@@ -17,8 +17,8 @@ NAME=$1
 DNAME=${NAME//./-}
 KOPS_STATE_STORE=s3://${DNAME}-state-store
 set -o allexport
-export NAME=$NAME
-export KOPS_STATE_STORE=$KOPS_STATE_STORE
+export `NAME=$NAME`
+export `KOPS_STATE_STORE=$KOPS_STATE_STORE`
 # Add environment to .bashrc
 echo "Setting environment variables....."
 echo "export NAME=$NAME" >> ~/.bashrc
@@ -55,8 +55,6 @@ chmod +x kops-linux-amd64
 sudo mv kops-linux-amd64 /usr/local/bin/kops
 
 
-
-
 # kops configure system ,us-east-1b \
 kops create -f $2
 #  -t private --networking weave \
@@ -73,4 +71,4 @@ kops create -f $2
 # kops edit ig --name=kube.aws.cloud42.dev nodes
 
 # deploy cluster on AWS
-# kops update cluster $NAME --yes
+kops update cluster $NAME --yes
