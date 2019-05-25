@@ -16,22 +16,20 @@ die () {
 [ "$#" -ne 2 ] && die "Usage: ./kops_install.sh pgcdev.aws.cloud42.dev ./pgcdev.yaml, $# provided"
 NAME=$1
 DNAME=${NAME//./-}
-KOPS_STATE_STORE=s3://pgc-c42-state-store
-# export `NAME=$NAME`
-# export `KOPS_STATE_STORE=$KOPS_STATE_STORE`
+STATE_STORE=pgc-c42-state-store
 export NAME=$NAME
-export KOPS_STATE_STORE=$KOPS_STATE_STORE
+export KOPS_STATE_STORE=s3://${STATE_STORE}
 # Add environment to .bashrc
 echo "Setting environment variables....."
 echo "export NAME=$NAME" >> ~/.bashrc
-echo "export KOPS_STATE_STORE=$KOPS_STATE_STORE" >> ~/.bashrc
+echo "export KOPS_STATE_STORE=s3://${STATE_STORE}" >> ~/.bashrc
 echo "source <(kubectl completion bash)" >> ~/.bashrc
 echo "source <(kops completion bash)" >> ~/.bashrc
 source ~/.bashrc
 
 # AWS Create Buckets and Cloudwatch Logs Groups
 aws s3api create-bucket --acl public-read --bucket ${DNAME}-ns-logs --region us-east-1
-aws s3api create-bucket --acl public-read --bucket pgc-c42-state-store --region us-east-1
+aws s3api create-bucket --acl public-read --bucket ${STATE_STORE} --region us-east-1
 
 aws logs create-log-group --log-group-name ${NAME}.pgc-core --region us-east-1
 aws logs create-log-group --log-group-name ${NAME}.nodeservers --region us-east-1
