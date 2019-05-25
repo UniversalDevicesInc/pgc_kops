@@ -72,7 +72,7 @@ spec:
         imagePullPolicy: Always
         env:
           - name: LOG_GROUP_NAME
-            value: "kubernetes.system"
+            value: "pgcdev.aws.cloud42.dev.system"
           - name: AWS_REGION
             value: "us-east-1"
         resources:
@@ -323,7 +323,7 @@ data:
 
     <match **pgc-system**>
       @type cloudwatch_logs
-      log_group_name "kubernetes.pgc-system"
+      log_group_name "pgcdev.aws.cloud42.dev.pgc-core"
       log_stream_name_key service
       remove_log_group_name_key true
       remove_log_stream_name_key true
@@ -334,7 +334,7 @@ data:
       @type copy
       <store>
        @type cloudwatch_logs
-       log_group_name "kubernetes.nodeservers"
+       log_group_name "pgcdev.aws.cloud42.dev.nodeservers"
        log_stream_name_key service
        remove_log_group_name_key true
        remove_log_stream_name_key true
@@ -342,7 +342,7 @@ data:
       </store>
       <store>
         @type s3
-        s3_bucket kube-nodeserver-logs
+        s3_bucket pgcdev-aws-cloud42-dev-ns-logs
         s3_region us-east-1
         <instance_profile_credentials>
           ip_address 169.254.169.254
@@ -374,7 +374,7 @@ data:
 
     <match **>
       @type cloudwatch_logs
-      log_group_name "kubernetes.system"
+      log_group_name "pgcdev.aws.cloud42.dev.system"
       log_stream_name_key service
       remove_log_group_name_key true
       remove_log_stream_name_key true

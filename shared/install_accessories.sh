@@ -14,15 +14,7 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/a
 # helm init --service-account tiller --history-max 200
 # helm repo add incubator http://storage.googleapis.com/kubernetes-charts-incubator
 # helm repo update
-aws logs create-log-group --log-group-name kubernetes.pgc-system --region us-east-1
-aws logs create-log-group --log-group-name kubernetes.nodeservers --region us-east-1
-aws logs create-log-group --log-group-name kubernetes.system --region us-east-1
-aws logs put-retention-policy --log-group-name kubernetes.pgc-system \
-  --retention-in-days 30 --region us-east-1
-aws logs put-retention-policy --log-group-name kubernetes.nodeservers \
-  --retention-in-days 30 --region us-east-1
-aws logs put-retention-policy --log-group-name kubernetes.system \
-  --retention-in-days 30 --region us-east-1
+
 #helm install --name fluentd incubator/fluentd-cloudwatch \
 #  -f ./fluentd.yaml --namespace kube-system
 # kubectl apply -f ./
