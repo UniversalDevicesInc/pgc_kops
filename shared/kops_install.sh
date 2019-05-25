@@ -16,7 +16,6 @@ die () {
 NAME=$1
 DNAME=${NAME//./-}
 KOPS_STATE_STORE=s3://${DNAME}-state-store
-set -o allexport
 export `NAME=$NAME`
 export `KOPS_STATE_STORE=$KOPS_STATE_STORE`
 # Add environment to .bashrc
@@ -26,7 +25,6 @@ echo "export KOPS_STATE_STORE=$KOPS_STATE_STORE" >> ~/.bashrc
 echo "source <(kubectl completion bash)" >> ~/.bashrc
 echo "source <(kops completion bash)" >> ~/.bashrc
 source ~/.bashrc
-set +o allexport
 
 # AWS Create Buckets and Cloudwatch Logs Groups
 aws s3api create-bucket --acl public-read --bucket ${DNAME}-ns-logs --region us-east-1
