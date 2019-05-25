@@ -97,7 +97,7 @@ metadata:
   name: master-us-east-1a
 spec:
   image: kope.io/k8s-1.12-debian-stretch-amd64-hvm-ebs-2019-05-13
-  machineType: t2.micro
+  machineType: t3a.large
   maxSize: 1
   minSize: 1
   nodeLabels:
@@ -117,7 +117,7 @@ metadata:
   name: nodes
 spec:
   image: kope.io/k8s-1.12-debian-stretch-amd64-hvm-ebs-2019-05-13
-  machineType: t2.micro
+  machineType: t3a.large
   maxSize: 2
   minSize: 2
   nodeLabels:
