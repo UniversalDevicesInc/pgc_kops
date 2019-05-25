@@ -41,7 +41,7 @@ spec:
     rbac: {}
   channel: stable
   cloudProvider: aws
-  configBase: s3://aws-cloud42-dev-state-store/kube.aws.cloud42.dev
+  configBase: s3://pgc-state-store/pgcdev.aws.cloud42.dev
   etcdClusters:
   - cpuRequest: 200m
     etcdMembers:
@@ -64,7 +64,7 @@ spec:
   kubernetesApiAccess:
   - 0.0.0.0/0
   kubernetesVersion: 1.12.7
-  masterPublicName: api.kube.aws.cloud42.dev
+  masterPublicName: api.pgcdev.aws.cloud42.dev
   networkCIDR: 172.20.0.0/16
   networking:
     kubenet: {}
@@ -93,7 +93,7 @@ kind: InstanceGroup
 metadata:
   creationTimestamp: null
   labels:
-    kops.k8s.io/cluster: kube.aws.cloud42.dev
+    kops.k8s.io/cluster: pgcdev.aws.cloud42.dev
   name: master-us-east-1a
 spec:
   image: kope.io/k8s-1.12-debian-stretch-amd64-hvm-ebs-2019-05-13
@@ -113,7 +113,7 @@ kind: InstanceGroup
 metadata:
   creationTimestamp: null
   labels:
-    kops.k8s.io/cluster: kube.aws.cloud42.dev
+    kops.k8s.io/cluster: pgcdev.aws.cloud42.dev
   name: nodes
 spec:
   image: kope.io/k8s-1.12-debian-stretch-amd64-hvm-ebs-2019-05-13

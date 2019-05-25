@@ -16,9 +16,9 @@ die () {
 [ "$#" -ne 2 ] && die "Usage: ./kops_install.sh pgcdev.aws.cloud42.dev ./pgcdev.yaml, $# provided"
 NAME=$1
 DNAME=${NAME//./-}
-KOPS_STATE_STORE=s3://${DNAME}-state-store
-export `NAME=$NAME`
-export `KOPS_STATE_STORE=$KOPS_STATE_STORE`
+KOPS_STATE_STORE=s3://pgc-c42-state-store
+# export `NAME=$NAME`
+# export `KOPS_STATE_STORE=$KOPS_STATE_STORE`
 export NAME=$NAME
 export KOPS_STATE_STORE=$KOPS_STATE_STORE
 # Add environment to .bashrc
@@ -31,12 +31,12 @@ source ~/.bashrc
 
 # AWS Create Buckets and Cloudwatch Logs Groups
 aws s3api create-bucket --acl public-read --bucket ${DNAME}-ns-logs --region us-east-1
-aws s3api create-bucket --acl public-read --bucket ${DNAME}-state-store --region us-east-1
+aws s3api create-bucket --acl public-read --bucket pgc-c42-state-store --region us-east-1
 
-aws logs create-log-group --log-group-name ${NAME}.pgc-system --region us-east-1
+aws logs create-log-group --log-group-name ${NAME}.pgc-core --region us-east-1
 aws logs create-log-group --log-group-name ${NAME}.nodeservers --region us-east-1
 aws logs create-log-group --log-group-name ${NAME}.system --region us-east-1
-aws logs put-retention-policy --log-group-name ${NAME}.pgc-system \
+aws logs put-retention-policy --log-group-name ${NAME}.pgc-core \
   --retention-in-days 30 --region us-east-1
 aws logs put-retention-policy --log-group-name ${NAME}.nodeservers \
   --retention-in-days 30 --region us-east-1
@@ -73,3 +73,5 @@ kops create -f $2
 
 # deploy cluster on AWS
 kops update cluster $NAME --yes
+
+echo "Log out and Back in before trying to manage the cluster."
