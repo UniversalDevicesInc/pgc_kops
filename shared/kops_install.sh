@@ -12,8 +12,7 @@ die () {
     echo >&2 "$@"
     exit 1
 }
-[ "$#" -eq 1 ] || die "cluster FQDN required e.g. 'pgcdev.aws.cloud42.dev', $# provided"
-[ "$#" -eq 2 ] || die "kops config spec required e.g. 'pgcdev.yaml', $# provided"
+[ ! "$#" -eq 3 ] || die "Usage: ./kops_install.sh pgcdev.aws.cloud42.dev ./pgcdev.yaml, $# provided"
 NAME=$1
 DNAME=${NAME//./-}
 KOPS_STATE_STORE=s3://${DNAME}-state-store
