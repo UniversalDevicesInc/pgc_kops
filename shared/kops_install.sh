@@ -18,6 +18,8 @@ DNAME=${NAME//./-}
 KOPS_STATE_STORE=s3://${DNAME}-state-store
 export `NAME=$NAME`
 export `KOPS_STATE_STORE=$KOPS_STATE_STORE`
+export NAME=$NAME
+export KOPS_STATE_STORE=$KOPS_STATE_STORE
 # Add environment to .bashrc
 echo "Setting environment variables....."
 echo "export NAME=$NAME" >> ~/.bashrc
