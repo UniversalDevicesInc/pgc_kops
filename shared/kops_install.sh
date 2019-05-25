@@ -69,6 +69,9 @@ kops create -f $2
 # modify nodes config if needed
 # kops edit ig --name=kube.aws.cloud42.dev nodes
 
+# import ssh
+kops create secret --name ${NAME} sshpublickey admin -i ~/.ssh/id_rsa.pub
+
 # deploy cluster on AWS
 kops update cluster $NAME --yes
 
