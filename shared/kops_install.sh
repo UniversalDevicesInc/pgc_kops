@@ -7,6 +7,7 @@
 # AmazonS3FullAccess
 # IAMFullAccess
 # AmazonVPCFullAccess
+# CloudWatchLogsFullAccess
 
 die () {
     echo >&2 "$@"
