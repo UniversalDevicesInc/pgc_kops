@@ -57,7 +57,7 @@ You can also modify the node and master sizes, number of nodes and masters, and 
 
     **TODO: I need to automate the editing of the pgcdev.yaml**
 
-Everything below this line just explains what the kops_install.sh is doing.
+Everything below this line in this section just explains what the kops_install.sh is doing.
 
 1. Sets the environment variables
 
@@ -93,3 +93,24 @@ To remove the cluster for whatever reason. Login to your controller bastion.
 `kops delete cluster ${NAME} --yes`
 
 Then delete the entries from ~/.bashrc. You will have to manually delete the S3 buckets and CloudWatch log groups. I didn't want to automate that for security reasons.
+
+## Install Accessories
+
+### Install Namespaces and ServiceAccounts
+
+PGC uses several service accounts and namespaces inside Kubernetes to work. This template is provided for you in the shared/namespaces_and_serviceaccount.yaml.
+
+Run the `install_accessories.sh` inside the shared folder to install them and the Kubernetes GUI (Dashboard). No modification is necessary here, but look over the yaml file and make sure you understand what it is creating. If you do not wish to install the dashboard, you still must install the namespaces_and_serviceaccount.yaml. To do so run `kubectl apply -f ./namespaces_and_serviceaccount.yaml` instead of running the full `install_accessories.sh` script.
+
+### Prometheus/Grafana/AlertManager
+
+I have provided a custom install of the monitoring stack customized. Modifying the custom stack is outside the scope of this document, but it should work for everything you need.
+
+To install:
+
+```bash
+cd custom-prometheus
+kubectl apply -f manifests/
+```
+
+Once this install is complete, give it a few minutes to spin up, you should be able to access the web interfaces of all thre applications.

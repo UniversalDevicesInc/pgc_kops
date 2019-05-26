@@ -16,17 +16,15 @@ die () {
 
 [ "$#" -ne 2 ] && die "Usage: ./kops_install.sh pgcdev.aws.cloud42.dev ./pgcdev.yaml, $# provided"
 NAME=$1
-DNAME=${NAME//./-}
 STATE_STORE=pgc-c42-state-store
+DNAME=${NAME//./-}
 export NAME=$NAME
 export KOPS_STATE_STORE=s3://${STATE_STORE}
 # Add environment to .bashrc
 echo "Setting environment variables....."
 echo "export NAME=$NAME" >> ~/.bashrc
 echo "export KOPS_STATE_STORE=s3://${STATE_STORE}" >> ~/.bashrc
-echo "source <(kubectl completion bash)" >> ~/.bashrc
-echo "source <(kops completion bash)" >> ~/.bashrc
-source ~/.bashrc
+
 
 # AWS Create Buckets and Cloudwatch Logs Groups
 aws s3api create-bucket --acl public-read --bucket ${DNAME}-ns-logs --region us-east-1
@@ -54,6 +52,9 @@ curl -LO https://github.com/kubernetes/kops/releases/download/$(curl -s https://
 chmod +x kops-linux-amd64
 sudo mv kops-linux-amd64 /usr/local/bin/kops
 
+echo "source <(kubectl completion bash)" >> ~/.bashrc
+echo "source <(kops completion bash)" >> ~/.bashrc
+source ~/.bashrc
 
 # kops configure system ,us-east-1b \
 kops create -f $2
