@@ -20,7 +20,7 @@ spec:
       serviceAccountName: allowsecrets-sa
       containers:
       - name: pgc-frontend
-        image: einstein42/pgc_frontend_manager:kube
+        image: einstein42/pgc_frontend_manager:kubedev
         imagePullPolicy: Always
         envFrom:
         - secretRef:

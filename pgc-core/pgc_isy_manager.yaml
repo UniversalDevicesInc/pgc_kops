@@ -20,7 +20,7 @@ spec:
       serviceAccountName: allowsecrets-sa
       containers:
       - name: pgc-isy
-        image: einstein42/pgc_isy_manager:kube
+        image: einstein42/pgc_isy_manager:kubedev
         imagePullPolicy: Always
         envFrom:
         - secretRef:

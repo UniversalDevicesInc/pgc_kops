@@ -20,7 +20,7 @@ spec:
       serviceAccountName: allowsecrets-sa
       containers:
       - name: pgc-ns
-        image: einstein42/pgc_ns_manager:kube
+        image: einstein42/pgc_ns_manager:kubedev
         imagePullPolicy: Always
         envFrom:
         - secretRef:
