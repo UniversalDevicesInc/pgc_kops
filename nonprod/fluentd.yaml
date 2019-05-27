@@ -321,7 +321,7 @@ data:
       </parse>
     </filter>
 
-    <match **pgc-system**>
+    <match **pgc-core**>
       @type cloudwatch_logs
       log_group_name "pgc.nonprod.isy.io.pgc-core"
       log_stream_name_key service
