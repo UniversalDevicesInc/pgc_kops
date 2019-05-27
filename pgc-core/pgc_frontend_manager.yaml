@@ -7,7 +7,7 @@ metadata:
     app: pgc-frontend
     version: "1"
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: pgc-frontend
