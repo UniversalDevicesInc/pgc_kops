@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pgc-ns
+  namespace: pgc-core
+  labels:
+    app: pgc-ns
+    version: "1"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pgc-ns
+  template:
+    metadata:
+      labels:
+        app: pgc-ns
+    spec:
+      # kubectl create secret -n pgc-core generic pgc-core --from-literal=AWS_ACCESS_KEY_ID='' --from-literal=AWS_SECRET_ACCESS_KEY=''
+      serviceAccountName: allowsecrets-sa
+      containers:
+      - name: pgc-ns
+        image: einstein42/pgc_ns_manager:kube
+        imagePullPolicy: Always
+        envFrom:
+        - secretRef:
+            name: pgc-core

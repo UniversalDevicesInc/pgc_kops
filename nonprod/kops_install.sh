@@ -14,9 +14,9 @@ die () {
     exit 1
 }
 
-[ "$#" -ne 2 ] && die "Usage: ./kops_install.sh pgcdev.aws.cloud42.dev ./pgcdev.yaml, $# provided"
+[ "$#" -ne 2 ] && die "Usage: ./kops_install.sh pgc.nonprod.isy.io ./pgctest.yaml, $# provided"
 NAME=$1
-STATE_STORE=pgc-c42-state-store
+STATE_STORE=pgc-nonprod-state-store
 DNAME=${NAME//./-}
 export NAME=$NAME
 export KOPS_STATE_STORE=s3://${STATE_STORE}

@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pgc-worker
+  namespace: pgc-core
+  labels:
+    app: pgc-worker
+    version: "1"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pgc-worker
+  template:
+    metadata:
+      labels:
+        app: pgc-worker
+    spec:
+      # kubectl create secret -n pgc-core generic pgc-core --from-literal=AWS_ACCESS_KEY_ID='' --from-literal=AWS_SECRET_ACCESS_KEY=''
+      serviceAccountName: allowsecrets-sa
+      containers:
+      - name: pgc-worker
+        image: einstein42/pgc_worker_manager:kubedev
+        imagePullPolicy: Always
+        envFrom:
+        - secretRef:
+            name: pgc-core
