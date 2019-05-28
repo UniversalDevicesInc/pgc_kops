@@ -114,3 +114,40 @@ kubectl apply -f manifests/
 ```
 
 Once this install is complete, give it a few minutes to spin up, you should be able to access the web interfaces of all thre applications.
+
+### Run pods on the master
+
+```bash
+kubectl taint node MASTERNODE node-role.kubernetes.io/master:NoSchedule-
+```
+
+### Make dashboard accessible
+
+Edit the kubernetes-dashboard service and change it from ClusterIP to NodePort
+
+```bash
+kubectl -n kube-system edit service kubernetes-dashboard
+
+grep 'client-certificate-data' ~/.kube/config | head -n 1 | awk '{print $2}' | base64 -d >> nonprod.crt
+
+grep 'client-key-data' ~/.kube/config | head -n 1 | awk '{print $2}' | base64 -d >> nonprod.key
+
+openssl pkcs12 -export -clcerts -inkey kubecfg.key -in kubecfg.crt -out nonprod.p12 -name "kubernetes-client"
+
+kubectl config view --raw -o json | jq -r '.clusters[0].cluster."certificate-authority-data"' | tr -d '"' | base64 --decode > nonprod.crt
+```
+
+Take the .p12 file and install it as a user client certificate in windows.
+
+Take the .crt and install it as a trusted root
+
+Access the dashboard via:
+
+<https://api.CLUSTERNAME/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#!/login>
+
+Get the token to login by getting the list of secrets and then describing the admin-user-token secret.
+
+```bash
+kubectl -n kube-system get secret
+kubectl -n kube-system describe secrets admin-user-token-8kjtq
+```
