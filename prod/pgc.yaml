@@ -1,0 +1,131 @@
+apiVersion: kops/v1alpha2
+kind: Cluster
+metadata:
+  creationTimestamp: null
+  name: pgc.prod.isy.io
+spec:
+  additionalPolicies:
+    node: |
+      [
+          {
+              "Effect": "Allow",
+              "Action": "s3:*",
+              "Resource": ["arn:aws:s3:::pgc-prod-isy-io-ns-logs/*"]
+          },
+          {
+              "Action": [
+                  "logs:*"
+              ],
+              "Effect": "Allow",
+              "Resource": "*"
+          }
+      ]
+    master: |
+      [
+          {
+              "Effect": "Allow",
+              "Action": "s3:*",
+              "Resource": ["arn:aws:s3:::pgc-prod-isy-io-ns-logs/*"]
+          },
+          {
+              "Action": [
+                  "logs:*"
+              ],
+              "Effect": "Allow",
+              "Resource": "*"
+          }
+      ]
+  api:
+    dns: {}
+  authorization:
+    rbac: {}
+  channel: stable
+  cloudProvider: aws
+  configBase: s3://pgc-prod-state-store/pgc.prod.isy.io
+  etcdClusters:
+  - cpuRequest: 200m
+    etcdMembers:
+    - instanceGroup: master-us-east-1a
+      name: a
+    memoryRequest: 100Mi
+    name: main
+  - cpuRequest: 100m
+    etcdMembers:
+    - instanceGroup: master-us-east-1a
+      name: a
+    memoryRequest: 100Mi
+    name: events
+  iam:
+    allowContainerRegistry: false
+    legacy: false
+  kubelet:
+    anonymousAuth: false
+    maxPods: 500
+  kubernetesApiAccess:
+  - 34.238.216.82/32
+  - 104.189.180.0/29
+  kubernetesVersion: 1.12.7
+  masterPublicName: api.pgc.prod.isy.io
+  networkCIDR: 172.20.0.0/16
+  networking:
+    kubenet: {}
+  nonMasqueradeCIDR: 100.64.0.0/10
+  sshAccess:
+  - 34.238.216.82/32
+  - 104.189.180.0/29
+  subnets:
+  - cidr: 172.20.32.0/19
+    name: us-east-1a
+    type: Public
+    zone: us-east-1a
+  - cidr: 172.20.64.0/19
+    name: us-east-1b
+    type: Public
+    zone: us-east-1b
+  topology:
+    dns:
+      type: Public
+    masters: public
+    nodes: public
+
+---
+
+apiVersion: kops/v1alpha2
+kind: InstanceGroup
+metadata:
+  creationTimestamp: null
+  labels:
+    kops.k8s.io/cluster: pgc.prod.isy.io
+  name: master-us-east-1a
+spec:
+  image: kope.io/k8s-1.12-debian-stretch-amd64-hvm-ebs-2019-05-13
+  machineType: t3a.medium
+  maxSize: 1
+  minSize: 1
+  nodeLabels:
+    kops.k8s.io/instancegroup: master-us-east-1a
+  role: Master
+  subnets:
+  - us-east-1a
+  - us-east-1b
+
+---
+
+apiVersion: kops/v1alpha2
+kind: InstanceGroup
+metadata:
+  creationTimestamp: null
+  labels:
+    kops.k8s.io/cluster: pgc.prod.isy.io
+  name: nodes
+spec:
+  image: kope.io/k8s-1.12-debian-stretch-amd64-hvm-ebs-2019-05-13
+  machineType: t3a.xlarge
+  maxSize: 2
+  minSize: 2
+  nodeLabels:
+    kops.k8s.io/instancegroup: nodes
+  role: Node
+  subnets:
+  - us-east-1a
+  - us-east-1b
