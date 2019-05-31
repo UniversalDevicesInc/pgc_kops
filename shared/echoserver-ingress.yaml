@@ -1,0 +1,20 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ns-ingress
+  namespace: nodeservers
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}]'
+spec:
+  tls:
+  - hosts:
+    - pgctest-ingress.isy.io
+  rules:
+    - http:
+        paths:
+        - path: /
+          backend:
+            serviceName: echoserver
+            servicePort: 80
