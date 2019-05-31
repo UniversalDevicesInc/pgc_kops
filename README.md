@@ -118,7 +118,7 @@ Once this install is complete, give it a few minutes to spin up, you should be a
 ### Run pods on the master
 
 ```bash
-kubectl taint node MASTERNODE node-role.kubernetes.io/master:NoSchedule-
+kubectl taint nodes --all node-role.kubernetes.io/master:NoSchedule-
 ```
 
 ### Make dashboard accessible
