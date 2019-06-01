@@ -5,9 +5,9 @@ metadata:
   namespace: pgc-core
   labels:
     app: pgc-ns
-    version: "1"
+    version: "1.0.3"
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: pgc-ns
@@ -20,8 +20,21 @@ spec:
       serviceAccountName: allowsecrets-sa
       containers:
       - name: pgc-ns
-        image: einstein42/pgc_ns_manager:kubedev
+        image: einstein42/pgc_ns_manager:version-1.0.3
         imagePullPolicy: Always
         envFrom:
         - secretRef:
             name: pgc-core
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pgc-ns
+  namespace: pgc-core
+spec:
+  ports:
+    - port: 80
+      targetPort: 3000
+  type: NodePort
+  selector:
+    app: pgc-ns

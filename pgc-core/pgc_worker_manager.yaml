@@ -5,9 +5,9 @@ metadata:
   namespace: pgc-core
   labels:
     app: pgc-worker
-    version: "1"
+    version: "1.0.4"
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: pgc-worker
@@ -20,8 +20,21 @@ spec:
       serviceAccountName: allowsecrets-sa
       containers:
       - name: pgc-worker
-        image: einstein42/pgc_worker_manager:kubedev
+        image: einstein42/pgc_worker_manager:version-1.0.4
         imagePullPolicy: Always
         envFrom:
         - secretRef:
             name: pgc-core
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pgc-worker
+  namespace: pgc-core
+spec:
+  ports:
+    - port: 80
+      targetPort: 3000
+  type: NodePort
+  selector:
+    app: pgc-worker
