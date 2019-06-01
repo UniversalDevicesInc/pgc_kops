@@ -102,6 +102,10 @@ PGC uses several service accounts and namespaces inside Kubernetes to work. This
 
 Run the `install_accessories.sh` inside the shared folder to install them and the Kubernetes GUI (Dashboard). No modification is necessary here, but look over the yaml file and make sure you understand what it is creating. If you do not wish to install the dashboard, you still must install the namespaces_and_serviceaccount.yaml. To do so run `kubectl apply -f ./namespaces_and_serviceaccount.yaml` instead of running the full `install_accessories.sh` script.
 
+### Create pgc-core secret
+
+kubectl create secret -n pgc-core generic pgc-secret --from-literal=AWS_ACCESS_KEY_ID='key' --from-literal=AWS_SECRET_ACCESS_KEY='secret'
+
 ### Prometheus/Grafana/AlertManager
 
 I have provided a custom install of the monitoring stack customized. Modifying the custom stack is outside the scope of this document, but it should work for everything you need.
@@ -132,7 +136,7 @@ grep 'client-certificate-data' ~/.kube/config | head -n 1 | awk '{print $2}' | b
 
 grep 'client-key-data' ~/.kube/config | head -n 1 | awk '{print $2}' | base64 -d >> nonprod.key
 
-openssl pkcs12 -export -clcerts -inkey kubecfg.key -in kubecfg.crt -out nonprod.p12 -name "kubernetes-client"
+openssl pkcs12 -export -clcerts -inkey nonprod.key -in nonprod.crt -out nonprod.p12 -name "kubernetes-client"
 
 kubectl config view --raw -o json | jq -r '.clusters[0].cluster."certificate-authority-data"' | tr -d '"' | base64 --decode > nonprod.crt
 ```
