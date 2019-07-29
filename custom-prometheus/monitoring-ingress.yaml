@@ -1,0 +1,28 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: monitor-ingress
+  namespace: monitoring
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}]'
+spec:
+  tls:
+  - hosts:
+    - pgc-monitor.isy.io
+  rules:
+    - http:
+        paths:
+        - path: /grafana
+          backend:
+            serviceName: grafana
+            servicePort: 3000
+        - path: /prometheus
+          backend:
+            serviceName: prometheus-k8s
+            servicePort: 9090
+        - path: /alertmanager
+          backend:
+            serviceName: alertmanager-main
+            servicePort: 9093
