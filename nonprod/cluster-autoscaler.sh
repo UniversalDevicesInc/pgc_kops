@@ -19,7 +19,7 @@ set -e
 #Set all the variables in this section
 CLUSTER_NAME="pgc.nonprod.isy.io"
 CLOUD_PROVIDER=aws
-IMAGE=k8s.gcr.io/cluster-autoscaler:v1.1.0
+IMAGE=k8s.gcr.io/cluster-autoscaler:v1.13.5
 MIN_NODES=2
 MAX_NODES=20
 AWS_REGION=us-east-1
